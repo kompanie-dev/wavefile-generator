@@ -1,0 +1,16 @@
+{
+        "name": "@kompanie/wavefile-generator",
+        "version": "1.0.0",
+        "license": "MIT",
+        "main": "index.js",
+        "repository": "github:kompanie-dev/wavefile-generator",
+        "files": [
+                "/source"
+        ],
+        "scripts": {
+                "start": "npx parcel demo/index.html --dist-dir build --no-cache --port 8000"
+        },
+        "dependencies": {
+                "parcel": "^2.8.3"
+        }
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WaveFileGenerator Demo</title>
+
+<button id="generate16BitWaveButton">Generate 16 Bit WAV</button>
+<button id="generate32BitWaveButton">Generate 32 Bit WAV</button>
+
+<script type="module">
+    import { ArrayDownloader } from "./arrayDownloader.js";
+    import { WaveFileGenerator16Bit } from "../index.js";
+    import { WaveFileGenerator32Bit } from "../index.js";
+
+    async function generateAndDownload(bitDepth, generator) {
+        const testAudioUrl = new URL("./stereo-test.mp3", import.meta.url);
+        const response = await fetch(testAudioUrl);
+        const testAudioArrayBuffer = await response.arrayBuffer();
+        const audioBuffer = await new AudioContext().decodeAudioData(testAudioArrayBuffer);
+        const waveFileArrayBuffer = generator.generate(audioBuffer);
+        
+        ArrayDownloader.download(waveFileArrayBuffer, "audio/wav", `test${bitDepth}.wav`);
+    }
+
+    document.getElementById("generate16BitWaveButton").onclick = () => generateAndDownload(16, new WaveFileGenerator16Bit());
+    document.getElementById("generate32BitWaveButton").onclick = () => generateAndDownload(32, new WaveFileGenerator32Bit());
+</script>
